@@ -1,10 +1,12 @@
+import mongoose from 'mongoose';
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import morgan from 'morgan';
-import mongoose from 'mongoose';
-import routes from './routes/routes.js';
+import routes from './routes/routes';
 
+const dotenv = require('dotenv');
+dotenv.config();
 // initialize
 const app = express();
 
@@ -27,26 +29,22 @@ app.set('views', path.join(__dirname, '../src/views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // To parse the incoming requests with JSON payloads
 app.use('', routes);
+
 // additional init stuff should go before hitting the routing
 
 // default index route
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
   res.send('hi');
 });
 
-// START THE SERVER
-// =============================================================================
 async function startServer() {
-
   try {
-
+    // connect DB
+    const mongoURI = process.env.MONGODB_URI;
+    await mongoose.connect(mongoURI);
+    console.log(`Mongoose connected to: ${mongoURI}`);
 
     const port = process.env.PORT || 9090;
-
-    const mongoDB = "mongodb+srv://robrl9:robrl9@postmodel.fcm4u.mongodb.net/?retryWrites=true&w=majority&appName=PostModel";
-    await mongoose.connect(mongoDB);
-    console.log(`Connected to ${mongoDB}`);
-
     app.listen(port);
 
     console.log(`Listening on port ${port}`);
