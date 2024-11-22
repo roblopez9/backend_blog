@@ -10,9 +10,11 @@ const dotenv = require('dotenv');
 dotenv.config();
 // initialize
 const app = express();
-
+const corsOptions = {
+  origin: "http://localhost:5173"
+};
 // enable/disable cross origin resource sharing if necessary
-app.use(cors());
+app.use(cors(corsOptions));
 
 // enable/disable http request logging
 app.use(morgan('dev'));
