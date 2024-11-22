@@ -1,6 +1,7 @@
 import { Router } from "express";
 import PostModel from "../models/post_models";
 import * as posts from "../controllers/postModel_controller";
+import { requireAuth } from "../services/passport";
 
 const router = Router();
 
@@ -15,11 +16,11 @@ router.get('/api/posts', async (req, res) => {
 })
 
 // post a new blog into the database
-router.post('/api/posts' , async (req, res) =>{
+router.post('/api/posts' , requireAuth, async (req, res) =>{
 
     const bloginfo = req.body;
     try {
-        const result = await posts.createPost(bloginfo);
+        const result = await posts.createPost(bloginfo, req.user.id);
         return res.json(result);
 
     } catch (error) {
@@ -52,7 +53,7 @@ router.get('/api/posts/:id', async(req, res) => {
     }
 })
 
-router.put('/api/posts/:id', async(req, res) => {
+router.put('/api/posts/:id', requireAuth, async(req, res) => {
     const newInfo = req.body;
     console.log(newInfo);
     const blogid = req.params.id;
@@ -66,7 +67,7 @@ router.put('/api/posts/:id', async(req, res) => {
 })
 
 // using id to delete post from database
-router.delete('/api/posts/:id', async(req, res) => {
+router.delete('/api/posts/:id', requireAuth, async(req, res) => {
     const blogid = req.params.id;
 
     try {

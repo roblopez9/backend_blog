@@ -4,6 +4,7 @@ import { Schema } from "mongoose";
 const Postschema = new Schema({
     Title: String,
     Content: String,
+    Author: {type:Schema.Types.ObjectId, ref:'UserModel'},
     Tags: String,
     coverUrl: String,
     updated: {type: Date, default: Date.now()}
