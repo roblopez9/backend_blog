@@ -25,11 +25,18 @@ router.post('/signin', requireSignin, async(req, res) => {
     const signinInfo = req.body
     try {
         const response = await users.signIn(signinInfo);
-        return res.json({ response, email: signinInfo.email });
+        const username = await UserModel.findById(req.user.id);
+        return res.json({ response, email: signinInfo.email, username: username.username });
     } catch (error) {
         res.status(422).json({error: error.message})
     }
 })
-  
+
+router.get('/user', requireAuth, async(req,res) => {
+
+    const email = req.user.email;
+    console.log(req.user);
+    return res.json({email});
+})
 
 export default router;
