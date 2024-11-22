@@ -4,6 +4,7 @@ import cors from 'cors';
 import path from 'path';
 import morgan from 'morgan';
 import routes from './routes/routes';
+import loginroute from './routes/userRoutes';
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -29,7 +30,7 @@ app.set('views', path.join(__dirname, '../src/views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // To parse the incoming requests with JSON payloads
 app.use('', routes);
-
+app.use('', loginroute);
 // additional init stuff should go before hitting the routing
 
 // default index route

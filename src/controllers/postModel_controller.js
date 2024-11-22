@@ -5,13 +5,14 @@ export async function getPosts(params) {
     return posts;
 }
 
-export async function createPost(postInfo) {
+export async function createPost(postInfo, user) {
     const newPost = new PostModel();
     newPost.Title = postInfo.Title;
     newPost.Content = postInfo.Content;
     newPost.Tags = postInfo.Tags;
     newPost.coverUrl = postInfo.coverUrl;
-
+    newPost.Author = user;
+    
     return newPost.save()
     
 }
