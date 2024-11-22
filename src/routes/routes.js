@@ -2,6 +2,7 @@ import { Router } from "express";
 import PostModel from "../models/post_models";
 import * as posts from "../controllers/postModel_controller";
 import { requireAuth } from "../services/passport";
+import UserModel from "../models/user_model";
 
 const router = Router();
 
@@ -21,6 +22,7 @@ router.post('/api/posts' , requireAuth, async (req, res) =>{
     const bloginfo = req.body;
     try {
         const result = await posts.createPost(bloginfo, req.user.id);
+
         return res.json(result);
 
     } catch (error) {
@@ -45,8 +47,9 @@ router.get('/api/posts/:id', async(req, res) => {
     const blogid = req.params.id;
     try {
         const result = await posts.getPost(blogid);
-
-        return res.json(result);
+        const gettingUser = await UserModel.populate(result, {path: 'Author', select: ['username', 'email']});
+        // console.log(gettingUser);
+        return res.json(gettingUser);
     } catch (error) {
         return res.status(422).json({ error: error.message });
 

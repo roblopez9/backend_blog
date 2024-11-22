@@ -8,7 +8,8 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         minLength: [6]
-    }
+    },
+    username: {type: String, lowercase: true, unique: true, required: true}
 }, {
     toObject: { virtuals: true },
     toJSON: { virtuals: true },

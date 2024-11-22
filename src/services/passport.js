@@ -27,11 +27,11 @@ const localLogin = new LocalStrategy(localOptions, async (email, password, done)
   // 🚀 TODO: should find user by email and check password
 
   try {
-      const user = await User.findOne({ email }); 
+      let user = await User.findOne({ email }); 
       if (!user){
           return done(null, "no user found");
       }
-      const isMatch = await user.comparePassword(password);
+      let isMatch = await user.comparePassword(password);
       if (isMatch) {
           return done(null, user);
       } else {
