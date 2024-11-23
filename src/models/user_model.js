@@ -9,6 +9,8 @@ const UserSchema = new Schema({
         required: true,
         minLength: [6]
     },
+    first_name: { type: String, lowercase: true, required: true},
+    last_name: { type: String, lowercases: true, required: true},
     username: {type: String, lowercase: true, unique: true, required: true}
 }, {
     toObject: { virtuals: true },

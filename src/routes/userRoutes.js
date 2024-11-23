@@ -26,7 +26,7 @@ router.post('/signin', requireSignin, async(req, res) => {
     try {
         const response = await users.signIn(signinInfo);
         const username = await UserModel.findById(req.user.id);
-        return res.json({ response, email: signinInfo.email, username: username.username });
+        return res.json({ response, email: signinInfo.email, username: username.username, firstname: username.first_name, lastname: username.last_name });
     } catch (error) {
         res.status(422).json({error: error.message})
     }
@@ -35,8 +35,10 @@ router.post('/signin', requireSignin, async(req, res) => {
 router.get('/user', requireAuth, async(req,res) => {
 
     const email = req.user.email;
+    const firstname = req.user.first_name;
+    const lastname = req.user.last_name;
     console.log(req.user);
-    return res.json({email});
+    return res.json({email, firstname, lastname});
 })
 
 export default router;
