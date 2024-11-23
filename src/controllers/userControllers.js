@@ -7,7 +7,8 @@ export async function signUp(userInfo) {
     user.email = userInfo.email;
     user.password = userInfo.password;
     user.username = userInfo.username;
-    
+    user.first_name = userInfo.first_name;
+    user.last_name =userInfo.last_name;
     const newUser = await user.save();
     const token = await tokenForUser(newUser);
     return token
