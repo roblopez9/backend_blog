@@ -1,6 +1,7 @@
 import UserModel from "../models/user_model";
 import dotenv from 'dotenv';
 import jwt from 'jwt-simple';
+dotenv.config();
 
 export async function signUp(userInfo) {
     const user = new UserModel();
@@ -10,8 +11,8 @@ export async function signUp(userInfo) {
     user.first_name = userInfo.first_name;
     user.last_name =userInfo.last_name;
     const newUser = await user.save();
-    const token = await tokenForUser(newUser);
-    return token
+    const token = tokenForUser(newUser);
+    return {token, newUser};
 }
 
 export async function signIn({email, password}) {

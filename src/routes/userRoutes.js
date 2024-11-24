@@ -9,17 +9,17 @@ const router = Router();
 
 router.post('/signup', async(req, res) => {
     const signupInfo = req.body;
+    console.log("the sighnupinfo is" + signupInfo);
     try {
         const response = await users.signUp(signupInfo);
-        res.json({ response, email: signupInfo.email });
+        let token = response.token;
+        let userInfo = response.newUser;
+        return res.json({ token , email: userInfo.email, username: userInfo.username, firstname: userInfo.first_name, lastname: userInfo.last_name });
     } catch (error) {
         return res.status(422).json({error:error.message})
     }
 })
 
-// router.get('/signup', async(req,res) => {
-
-// })
 
 router.post('/signin', requireSignin, async(req, res) => {
     const signinInfo = req.body
