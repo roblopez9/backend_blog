@@ -37,7 +37,7 @@ router.get('/user', requireAuth, async(req,res) => {
     const email = req.user.email;
     const firstname = req.user.first_name;
     const lastname = req.user.last_name;
-    console.log(req.user);
+    // console.log(req.user);
     return res.json({email, firstname, lastname});
 })
 
