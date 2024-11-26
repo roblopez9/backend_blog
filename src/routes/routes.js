@@ -8,8 +8,10 @@ const router = Router();
 
 // Get the collections of posts from database
 router.get('/api/posts', async (req, res) => {
+    const page = req.query.p || 0;
+    console.log(page);
     try {
-        const results = await posts.getPosts();
+        const results = await posts.getPosts(page);
         return res.json(results);        
     } catch (error) {
         return res.status(404).json({ error: error.message });

@@ -2,7 +2,7 @@ import PostModel from "../models/post_models";
 import UserModel from "../models/user_model";
 
 export async function getPosts(params) {
-    const posts = await PostModel.find().sort({ updatedAt: -1 });
+    const posts = await PostModel.find().sort({ updatedAt: -1 }).skip(params * 5).limit(5);
     // const posts = await Post.find().populate('author', 'username email');
     return posts;
 }
