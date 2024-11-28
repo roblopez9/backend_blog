@@ -3,6 +3,7 @@ import PostModel from "../models/post_models";
 import * as posts from "../controllers/postModel_controller";
 import { requireAuth } from "../services/passport";
 import UserModel from "../models/user_model";
+import createPresignedPost from "../services/s3";
 
 const router = Router();
 
@@ -82,6 +83,19 @@ router.delete('/api/posts/:id', requireAuth, async(req, res) => {
         return res.status(422).json({ error: error.message });
     }
 })
+
+router.get('/sign-s3', async(req, res) => {
+    try {
+        const key = req.query['file-name'];
+        const fileType = req.query['file-type'];
+        const data = await createPresignedPost(key, fileType);
+        console.log(data)        
+        return res.send(JSON.stringify(data))
+    } catch (error) {
+        console.log("the error is: " + error);
+        return res.status(422).json( error);
+    }
+});
 
 
 export default router;

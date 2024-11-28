@@ -33,7 +33,7 @@ router.post('/signin', requireSignin, async(req, res) => {
 })
 
 router.get('/user', requireAuth, async(req,res) => {
-
+    console.log(req.headers);
     const email = req.user.email;
     const firstname = req.user.first_name;
     const lastname = req.user.last_name;

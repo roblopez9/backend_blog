@@ -7,11 +7,11 @@ import routes from './routes/routes';
 import loginroute from './routes/userRoutes';
 
 const dotenv = require('dotenv');
-dotenv.config();
+dotenv.config({ silent: true });
 // initialize
 const app = express();
 const corsOptions = {
-  origin: "http://localhost:5173"
+  origin: "http://localhost:5173",
 };
 // enable/disable cross origin resource sharing if necessary
 app.use(cors(corsOptions));
